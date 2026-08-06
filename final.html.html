@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sau Technologies - Innovative software solutions">
+    <title>Sau Technologies | Complete Website</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ========== CSS Variables ========== */
+        :root {
+            --primary: #FF6B6B;
+            --primary-dark: #EE5A24;
+            --secondary: #48DBFB;
+            --accent: #FECA57;
+            --dark: #2C3E50;
+            --light: #F8F9FA;
+            --text: #2D3436;
+            --white: #ffffff;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --radius: 16px;
+            --transition: all 0.3s ease;
+            --font: 'Quicksand', sans-serif;
+        }
+
+        /* ========== Reset ========== */
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font); color: var(--text); background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 50%, #a18cd1 100%); background-attachment: fixed; line-height:1.6; min-height:100vh; }
+        .container { max-width:1200px; margin:0 auto; padding:0 1.5rem; }
+
+        /* ========== Header & Navigation ========== */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .nav-container { display:flex; justify-content:space-between; align-items:center; }
+        .logo a { font-size:1.8rem; font-weight:700; color:white; text-decoration:none; }
+        .logo span { color: var(--accent); }
+        nav ul { display:flex; list-style:none; gap:1.5rem; }
+        nav a { color:white; text-decoration:none; font-weight:600; padding:0.5rem 1rem; border-radius:30px; transition:var(--transition); cursor:pointer; }
+        nav a:hover, nav a.active { background:rgba(255,255,255,0.3); }
+        .mobile-menu-btn { display:none; background:none; border:none; color:white; font-size:2rem; cursor:pointer; }
+
+        /* ========== Page Sections (Show/Hide) ========== */
+        .page { display: none; }
+        .page.active { display: block; }
+
+        /* ========== Hero ========== */
+        .hero {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+        .hero h1 { font-size:3rem; margin-bottom:1rem; }
+        .hero p { font-size:1.2rem; margin-bottom:2rem; opacity:0.9; }
+        .btn-primary, .btn-secondary {
+            display:inline-block; padding:0.8rem 2rem; border-radius:50px; font-weight:700; text-decoration:none;
+            transition:var(--transition); border:none; cursor:pointer;
+        }
+        .btn-primary { background:var(--accent); color:var(--dark); box-shadow:0 5px 15px rgba(254,202,87,0.4); }
+        .btn-primary:hover { transform:translateY(-3px); box-shadow:0 10px 25px rgba(254,202,87,0.6); }
+        .btn-secondary { background:var(--white); color:var(--primary); border:2px solid var(--primary); }
+        .btn-secondary:hover { background:var(--primary); color:white; }
+
+        /* ========== Sections ========== */
+        .section { padding:4rem 0; }
+        .section-title { text-align:center; font-size:2.2rem; margin-bottom:2rem; color:var(--primary-dark); }
+        .bg-light { background:rgba(255,255,255,0.7); backdrop-filter:blur(10px); }
+
+        /* ========== Services Grid ========== */
+        .services-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:2rem; }
+        .service-card {
+            background:white; padding:2rem; border-radius:var(--radius); box-shadow:var(--shadow);
+            text-align:center; transition:var(--transition); border-top:5px solid var(--secondary);
+        }
+        .service-card:hover { transform:translateY(-8px); }
+        .service-icon { font-size:3rem; margin-bottom:1rem; }
+
+        /* ========== About Page ========== */
+        .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; align-items:center; }
+        .founder-card { background:white; max-width:400px; margin:0 auto; padding:2rem; border-radius:var(--radius); text-align:center; box-shadow:var(--shadow); }
+        .founder-avatar { font-size:5rem; background:#FFD93D; width:120px; height:120px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 1rem; }
+
+        /* ========== Contact ========== */
+        .contact-container { display:grid; grid-template-columns:1fr 2fr; gap:3rem; }
+        .contact-info { background:linear-gradient(135deg, var(--primary), var(--secondary)); color:white; padding:2rem; border-radius:var(--radius); }
+        .contact-info h2 { color:white; margin-bottom:1rem; }
+        .contact-info p { margin-bottom:0.8rem; }
+        .social-links a { color:white; text-decoration:underline; }
+        .contact-form { display:flex; flex-direction:column; gap:1.2rem; }
+        .form-group { display:flex; flex-direction:column; gap:0.3rem; }
+        .form-group input, .form-group select, .form-group textarea {
+            padding:0.8rem 1rem; border:2px solid #ddd; border-radius:10px; font-family:var(--font); font-size:1rem;
+        }
+        .error-msg { color:#e74c3c; font-size:0.85rem; min-height:1.2rem; }
+        .form-feedback { font-weight:700; text-align:center; margin-top:1rem; }
+        .form-feedback.success { color:#27ae60; }
+        .form-feedback.error { color:#e74c3c; }
+
+        /* ========== Footer ========== */
+        footer { background:var(--dark); color:white; padding:2rem 0; margin-top:3rem; }
+        .footer-container { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; }
+        .footer-links { display:flex; gap:1.5rem; }
+        .footer-links a { color:white; text-decoration:none; cursor:pointer; }
+        .footer-links a:hover { text-decoration:underline; }
+
+        /* ========== Page Banner ========== */
+        .page-banner { background:linear-gradient(135deg, var(--primary), var(--secondary)); color:white; padding:3rem 0; text-align:center; }
+        .page-banner h1 { font-size:2.5rem; }
+
+        /* ========== Responsive ========== */
+        @media (max-width:768px) {
+            .mobile-menu-btn { display:block; }
+            nav { display:none; position:absolute; top:100%; left:0; width:100%; background:var(--primary-dark); }
+            nav.show { display:block; }
+            nav ul { flex-direction:column; padding:1rem; }
+            .about-grid, .contact-container { grid-template-columns:1fr; }
+            .footer-container { flex-direction:column; text-align:center; gap:1rem; }
+            .hero h1 { font-size:2rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container nav-container">
+            <div class="logo">
+                <a onclick="navigateTo('home')">💻 Sau<span>Tech</span></a>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">☰</button>
+            <nav id="mainNav">
+                <ul>
+                    <li><a onclick="navigateTo('home')" class="active" id="nav-home">Home</a></li>
+                    <li><a onclick="navigateTo('about')" id="nav-about">About</a></li>
+                    <li><a onclick="navigateTo('services')" id="nav-services">Services</a></li>
+                    <li><a onclick="navigateTo('contact')" id="nav-contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ========== PAGE: HOME ========== -->
+    <div id="page-home" class="page active">
+        <section class="hero">
+            <div class="container hero-content">
+                <h1>Building Digital Solutions<br>for Your Business</h1>
+                <p>We create modern websites, mobile apps, and AI-powered tools to help your business grow.</p>
+                <a class="btn-primary" onclick="navigateTo('contact')">Get a Free Quote</a>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Our Core Services</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">🌐</div>
+                        <h3>Web Development</h3>
+                        <p>Responsive, high-performance websites using modern frameworks.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">📱</div>
+                        <h3>Mobile Apps</h3>
+                        <p>Native and cross-platform mobile applications for iOS and Android.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🤖</div>
+                        <h3>AI Solutions</h3>
+                        <p>Chatbots, recommendation systems, and intelligent automation.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section bg-light">
+            <div class="container">
+                <h2 class="section-title">Ready to start your project?</h2>
+                <p style="text-align:center; max-width:600px; margin:0 auto 2rem;">Let's discuss your idea and turn it into reality.</p>
+                <div style="text-align:center;">
+                    <a class="btn-secondary" onclick="navigateTo('contact')">Contact Us Today</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ========== PAGE: ABOUT ========== -->
+    <div id="page-about" class="page">
+        <section class="page-banner">
+            <div class="container">
+                <h1>About Us</h1>
+                <p>We are a team of passionate developers and designers.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="about-grid">
+                    <div>
+                        <h2>Our Story</h2>
+                        <p>Sau Technologies was founded by Debasish Sau, a computer science student with a vision to provide high-quality, affordable digital solutions. We combine technical expertise with creativity to deliver products that exceed expectations.</p>
+                        <p>Our mission is to empower businesses of all sizes with technology that drives growth and efficiency.</p>
+                    </div>
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=500" alt="Team collaboration" style="border-radius:15px; width:100%;" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section bg-light">
+            <div class="container">
+                <h2 class="section-title">Meet the Founder</h2>
+                <div class="founder-card">
+                    <div class="founder-avatar">😎</div>
+                    <h3>Debasish Sau</h3>
+                    <p>Founder & Lead Developer</p>
+                    <p>B.Tech CSE, Dayananda Sagar University<br>Full-stack developer passionate about AI and cloud technologies.</p>
+                    <p><strong>Email:</strong> debasish@example.com<br><strong>Phone:</strong> +91 9876543210</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ========== PAGE: SERVICES ========== -->
+    <div id="page-services" class="page">
+        <section class="page-banner">
+            <div class="container">
+                <h1>Our Services</h1>
+                <p>Tailored digital solutions for your business needs.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">🌐</div>
+                        <h3>Web Development</h3>
+                        <p>Custom websites built with HTML, CSS, JavaScript, and modern frameworks like React. We ensure responsive design, SEO optimization, and fast load times.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">📱</div>
+                        <h3>Mobile App Development</h3>
+                        <p>From concept to deployment, we build native and cross-platform apps using Java/Kotlin for Android and Swift/React Native for iOS.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🤖</div>
+                        <h3>AI & Machine Learning</h3>
+                        <p>Implement intelligent solutions: chatbots, recommendation systems, image recognition, and natural language processing using Python and cloud AI services.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">☁️</div>
+                        <h3>Cloud & DevOps</h3>
+                        <p>Deploy and manage applications on AWS, Azure, or GCP. We use Docker, Kubernetes, and CI/CD pipelines for reliable delivery.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ========== PAGE: CONTACT ========== -->
+    <div id="page-contact" class="page">
+        <section class="page-banner">
+            <div class="container">
+                <h1>Get in Touch</h1>
+                <p>We'd love to hear about your project.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container contact-container">
+                <div class="contact-info">
+                    <h2>Contact Details</h2>
+                    <p><strong>📧 Email:</strong> debasish@example.com</p>
+                    <p><strong>📱 Phone:</strong> +91 9876543210</p>
+                    <p><strong>📍 Address:</strong> Bengaluru, Karnataka, India</p>
+                    <div class="social-links">
+                        <a href="https://linkedin.com/in/debasish-sau" target="_blank">LinkedIn</a> |
+                        <a href="https://github.com/debasish-sau" target="_blank">GitHub</a>
+                    </div>
+                </div>
+
+                <form id="contactForm" class="contact-form" novalidate>
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" placeholder="Your name" required minlength="2">
+                        <span class="error-msg" id="nameError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                        <span class="error-msg" id="emailError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone (optional)</label>
+                        <input type="tel" id="phone" name="phone" placeholder="10-digit number" pattern="[0-9]{10}">
+                        <span class="error-msg" id="phoneError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="service">Service Interested In</label>
+                        <select id="service" name="service">
+                            <option value="">-- Select --</option>
+                            <option value="web">Web Development</option>
+                            <option value="mobile">Mobile App</option>
+                            <option value="ai">AI Solutions</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message *</label>
+                        <textarea id="message" name="message" rows="5" placeholder="Describe your project..." required minlength="10"></textarea>
+                        <span class="error-msg" id="messageError"></span>
+                    </div>
+                    <button type="submit" class="btn-primary">Send Message</button>
+                    <div id="formFeedback" class="form-feedback"></div>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-container">
+            <p>&copy; 2025 Sau Technologies. All rights reserved.</p>
+            <div class="footer-links">
+                <a onclick="navigateTo('home')">Home</a>
+                <a onclick="navigateTo('about')">About</a>
+                <a onclick="navigateTo('services')">Services</a>
+                <a onclick="navigateTo('contact')">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ========== Page Navigation (SPA) ==========
+        function navigateTo(page) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            // Show selected page
+            const target = document.getElementById('page-' + page);
+            if (target) target.classList.add('active');
+            
+            // Update nav active class
+            document.querySelectorAll('nav a').forEach(link => link.classList.remove('active'));
+            const navItem = document.getElementById('nav-' + page);
+            if (navItem) navItem.classList.add('active');
+            
+            // Close mobile menu if open
+            const mainNav = document.getElementById('mainNav');
+            if (mainNav) mainNav.classList.remove('show');
+        }
+
+        // ========== Mobile Menu Toggle ==========
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        if (mobileMenuBtn && mainNav) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mainNav.classList.toggle('show');
+            });
+        }
+
+        // ========== Contact Form Validation ==========
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const phoneInput = document.getElementById('phone');
+            const messageInput = document.getElementById('message');
+            const formFeedback = document.getElementById('formFeedback');
+
+            const nameError = document.getElementById('nameError');
+            const emailError = document.getElementById('emailError');
+            const phoneError = document.getElementById('phoneError');
+            const messageError = document.getElementById('messageError');
+
+            function showError(input, span, msg) {
+                input.style.borderColor = '#e74c3c';
+                span.textContent = msg;
+            }
+            function clearError(input, span) {
+                input.style.borderColor = '';
+                span.textContent = '';
+            }
+
+            function validateName() {
+                const val = nameInput.value.trim();
+                if (val === '') { showError(nameInput, nameError, 'Name is required.'); return false; }
+                if (val.length < 2) { showError(nameInput, nameError, 'Min 2 characters.'); return false; }
+                clearError(nameInput, nameError); return true;
+            }
+
+            function validateEmail() {
+                const val = emailInput.value.trim();
+                const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (val === '') { showError(emailInput, emailError, 'Email is required.'); return false; }
+                if (!pattern.test(val)) { showError(emailInput, emailError, 'Invalid email format.'); return false; }
+                clearError(emailInput, emailError); return true;
+            }
+
+            function validatePhone() {
+                const val = phoneInput.value.trim();
+                if (val !== '' && !/^\d{10}$/.test(val)) {
+                    showError(phoneInput, phoneError, 'Must be 10 digits.'); return false;
+                }
+                clearError(phoneInput, phoneError); return true;
+            }
+
+            function validateMessage() {
+                const val = messageInput.value.trim();
+                if (val === '') { showError(messageInput, messageError, 'Message is required.'); return false; }
+                if (val.length < 10) { showError(messageInput, messageError, 'Min 10 characters.'); return false; }
+                clearError(messageInput, messageError); return true;
+            }
+
+            nameInput.addEventListener('blur', validateName);
+            emailInput.addEventListener('blur', validateEmail);
+            phoneInput.addEventListener('blur', validatePhone);
+            messageInput.addEventListener('blur', validateMessage);
+
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const valid = validateName() & validateEmail() & validatePhone() & validateMessage();
+                if (valid) {
+                    formFeedback.textContent = '✅ Message sent successfully! (demo)';
+                    formFeedback.className = 'form-feedback success';
+                    contactForm.reset();
+                    [nameError, emailError, phoneError, messageError].forEach(s => s.textContent = '');
+                    [nameInput, emailInput, phoneInput, messageInput].forEach(inp => inp.style.borderColor = '');
+                } else {
+                    formFeedback.textContent = '❌ Please fix the errors above.';
+                    formFeedback.className = 'form-feedback error';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
